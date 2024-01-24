@@ -5,6 +5,7 @@ const PasswordGenerator = () => {
   const [length, setLength] = useState(8);
   const [special, setSpecial] = useState(false);
   const [numbers, setNumbers] = useState(false);
+  const [copyText, setCopytext] = useState("Copy");
 
   const randomPasswordGenerator = () => {
     let str = "QWERTYUIOPLKJHGFDSAZXCVBNMmnbvcxzasdfghjklpoiuytrewq";
@@ -21,6 +22,14 @@ const PasswordGenerator = () => {
     setPassword(result);
   };
 
+  const copyPassword = () => {
+    setCopytext("Copied");
+    if (password) navigator.clipboard.writeText(password);
+    setTimeout(() => {
+      setCopytext("Copy");
+    }, 1000);
+  };
+
   useEffect(() => {
     randomPasswordGenerator();
   }, [length, special, numbers]);
@@ -34,7 +43,9 @@ const PasswordGenerator = () => {
             type="text"
             value={password}
           />
-          <button className="password_section__button">Copy</button>
+          <button className="password_section__button" onClick={copyPassword}>
+            {copyText}
+          </button>
         </div>
         <div className="password_item">
           <input
